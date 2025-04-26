@@ -25,7 +25,7 @@ submit=st.button("Submit Guess")
 
 st.session_state.user_id=user_id
 
-backend_url="http://backend:8000"
+backend_url="https://what-beats-rock-its0.onrender.com"
 #backend_url="http://app:8000"
 
 def rain_cheers():
@@ -61,7 +61,7 @@ if submit and guess:
         "persona": persona
     }
     #res=requests.post("http://app:8000/guess", json=entries)
-    res=requests.post("http://backend:8000/guess", json=entries)
+    res=requests.post("https://what-beats-rock-its0.onrender.com", json=entries)
     if res.ok:
         data=res.json()
         if data.get("game_over"):
