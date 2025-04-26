@@ -61,7 +61,7 @@ if submit and guess:
         "persona": persona
     }
     #res=requests.post("http://app:8000/guess", json=entries)
-    res=requests.post("https://what-beats-rock-its0.onrender.com", json=entries)
+    res=requests.post("https://what-beats-rock-its0.onrender.com/guess", json=entries)
     if res.ok:
         data=res.json()
         if data.get("game_over"):
