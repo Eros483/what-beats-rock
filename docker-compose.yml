@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  app:
+  backend:
     build:
       context: .
       dockerfile: backend/Dockerfile
@@ -10,6 +10,12 @@ services:
       - redis
     networks:
       - app-network
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      retries: 5
 
   redis:
     image: "redis:latest"
@@ -27,13 +33,13 @@ services:
       - "8501:8501"
 
     environment:
-      - BACKEND_URL=http://app:8000
+      - BACKEND_URL=http://backend:8000
 
     networks:
       - app-network
 
     depends_on:
-      - app
+      - backend
 
 networks:
   app-network:

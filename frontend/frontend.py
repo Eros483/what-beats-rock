@@ -3,6 +3,8 @@ import requests
 import random
 import json
 from streamlit_extras.let_it_rain import rain
+import time
+import requests
 
 if 'game_state' not in st.session_state:
     st.session_state.game_state={
@@ -23,7 +25,8 @@ submit=st.button("Submit Guess")
 
 st.session_state.user_id=user_id
 
-backend_url="http://app:8000"
+backend_url="http://backend:8000"
+#backend_url="http://app:8000"
 
 def rain_cheers():
     rain(
@@ -57,7 +60,8 @@ if submit and guess:
         "user_id": user_id,
         "persona": persona
     }
-    res=requests.post("http://app:8000/guess", json=entries)
+    #res=requests.post("http://app:8000/guess", json=entries)
+    res=requests.post("http://backend:8000/guess", json=entries)
     if res.ok:
         data=res.json()
         if data.get("game_over"):
@@ -65,11 +69,13 @@ if submit and guess:
 
         else:
             st.success(f"{data['message']}")
-            st.info(f"Guessed {data['times_guessed']} times globally")
+            if data and "times_guessed" in data:
+                st.info(f"Guessed {data['times_guessed']} times globally")
+                st.balloons()
+                rain_cheers()
             st.markdown(f"**Score**: {data['score']}")
             st.markdown(f"**your previous guesses**: {','.join(data['history'])}")
-            st.balloons()
-            rain_cheers()
+
     else:
         st.error("Something went wrong.")
 
