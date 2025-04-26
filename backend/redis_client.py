@@ -1,8 +1,8 @@
 import redis
 
 r=redis.Redis(
-    host="redis",
+    host="beloved-moth-10180.upstash.io",
     port=6379,
-    db=0,
-    decode_responses=True
+    password='ASfEAAIjcDE3OTc1ZDliMjNmYmE0MTJjOGNlY2VjYjg5NWNhOTgzM3AxMA',
+    ssl=True
 )
